@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 export interface User {
   first_name: string;
@@ -39,7 +40,7 @@ export interface Goal {
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  private apiUrl = 'http://127.0.0.1:8000/api';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
@@ -86,7 +87,7 @@ export class ApiService {
     });
   }
 
-  // Categorias
+  // categories
   createCategory(data: { name: string; color: string; type: string }) {
     const token = localStorage.getItem('token');
     return this.http.post(`${this.apiUrl}/categories/create/`, data, {
@@ -115,7 +116,7 @@ export class ApiService {
     });
   }
 
-  // Transações
+  // transactions
   getTransactions(): Observable<Transaction[]> {
     return this.http.get<Transaction[]>(`${this.apiUrl}/transactions/`, {
       headers: this.getAuthHeaders(),
