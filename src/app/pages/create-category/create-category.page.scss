@@ -1,0 +1,26 @@
+ion-content {
+  --background: #0d0d0d;
+  color: #fff;
+}
+
+ion-toolbar {
+  --background: #1a1a1a;
+}
+
+ion-item {
+  --background: #1f1f1f;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
+
+ion-input[type='color'] {
+  height: 40px;
+  width: 100%;
+  border: none;
+  background: none;
+}
+
+ion-button {
+  --background: linear-gradient(135deg, #9b59b6, #e056fd);
+  font-weight: bold;
+}

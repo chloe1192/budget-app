@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Transações</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/transactions/create/">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <!-- Pull to refresh -->
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Estado vazio -->
+  <div *ngIf="!transactions || transactions.length === 0" class="empty-wrap">
+    <ion-icon name="cash-outline" size="large"></ion-icon>
+    <p>Nenhuma transação encontrada.</p>
+    <ion-button fill="outline" routerLink="/transactions/create/">
+      Criar transação
+    </ion-button>
+  </div>
+
+  <!-- LISTA -->
+  <ion-list *ngIf="transactions && transactions.length > 0">
+
+    <ion-item-sliding *ngFor="let t of transactions">
+      
+      <ion-item>
+
+        <!-- Cor da categoria -->
+        <div class="color-dot" [ngStyle]="{'background-color': t.category?.color || '#ccc'}"></div>
+
+        <ion-label>
+          <h2>{{ t.description }}</h2>
+          <p class="muted">
+            {{ t.date | date:'dd/MM/yyyy' }} • {{ t.category?.name || 'Sem categoria' }}
+          </p>
+        </ion-label>
+
+        <div class="amount" [ngClass]="t.is_income ? 'income' : 'expense'">
+          {{ t.is_income ? '+' : '-' }} {{ t.amount | currency:'BRL' }}
+        </div>
+
+        <ion-button fill="clear" slot="end" (click)="openTransaction(t)">
+          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
+        </ion-button>
+
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="editTransaction(t)">
+          <ion-icon slot="icon-only" name="pencil"></ion-icon>
+        </ion-item-option>
+
+        <ion-item-option color="danger" (click)="confirmDelete(t)">
+          <ion-icon slot="icon-only" name="trash"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>

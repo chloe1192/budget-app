@@ -3,9 +3,14 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
         <ion-list id="inbox-list">
-          <ion-list-header>Inbox</ion-list-header>
-          <ion-note>hi&#64;ionicframework.com</ion-note>
-
+          <ion-list-header>Budget</ion-list-header>
+          <ion-note [routerLink]="'/user'" *ngIf="username != ''">hi &#64;{{ username }}</ion-note>
+          <ion-menu-toggle auto-hide="false" *ngIf="token == ''">
+              <ion-item routerDirection="root" [routerLink]="'/login'" lines="none" detail="false" routerLinkActive="selected">
+                <ion-icon aria-hidden="true" slot="start"></ion-icon>
+                <ion-label>Login</ion-label>
+              </ion-item>
+          </ion-menu-toggle>
           @for (p of appPages; track p; let i = $index) {
             <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">

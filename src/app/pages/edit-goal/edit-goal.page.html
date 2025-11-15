@@ -1,0 +1,41 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="dark">
+    <ion-title>Editar Meta</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <form [formGroup]="goalForm" (ngSubmit)="updateGoal()">
+    <ion-item>
+      <ion-label position="floating">Título</ion-label>
+      <ion-input formControlName="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Descrição</ion-label>
+      <ion-textarea formControlName="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Data</ion-label>
+      <ion-datetime
+        formControlName="date"
+        display-format="DD/MM/YYYY"
+      ></ion-datetime>
+    </ion-item>
+
+    <ion-button
+      expand="block"
+      type="submit"
+      class="ion-margin-top"
+      color="tertiary"
+    >
+      Atualizar Meta
+    </ion-button>
+  </form>
+</ion-content>
