@@ -89,7 +89,7 @@ export class CreateTransactionPage implements OnInit {
       ...formValue,
       amount: this.parseCurrency(formValue.amount)
     };
-    this.api.addTransaction(transaction).subscribe({
+    this.api.createTransaction(transaction).subscribe({
       next: async () => {
         const toast = await this.toastCtrl.create({
           message: 'Transação criada com sucesso!',

@@ -57,7 +57,7 @@ export class CreateGoalPage implements OnInit {
       ...formValue,
       amount: this.parseCurrency(formValue.amount)
     };
-    this.api.addGoal(data).subscribe({
+    this.api.createGoal(data).subscribe({
       next: async (res: Goal) => {
         const toast = await this.toastCtrl.create({
           message: `Meta com nome: ${res.title} criada com sucesso!`,

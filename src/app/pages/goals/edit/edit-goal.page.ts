@@ -83,7 +83,7 @@ export class EditGoalPage implements OnInit {
       ...formValue,
       amount: this.parseCurrency(formValue.amount)
     };
-    this.api.editGoal(this.goalId, data).subscribe({
+    this.api.updateGoal(this.goalId, data).subscribe({
       next: async (res) => {
         const toast = await this.toastCtrl.create({
           message: 'Meta atualizada com sucesso!',

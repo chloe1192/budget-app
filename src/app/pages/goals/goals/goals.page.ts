@@ -58,7 +58,7 @@ export class GoalsPage implements OnInit {
         { text: 'Cancelar', role: 'cancel' },
         {
           text: 'Excluir',
-          handler: () => this.removeGoal(goal.id!),
+          handler: () => this.deleteGoal(goal.id!),
           cssClass: 'danger',
         },
       ],
@@ -66,8 +66,8 @@ export class GoalsPage implements OnInit {
     await alert.present();
   }
 
-  removeGoal(id: number) {
-    this.api.removeGoal(id).subscribe({
+  deleteGoal(id: number) {
+    this.api.deleteGoal(id).subscribe({
       next: () => {
         this.goals = this.goals.filter((g) => g.id !== id);
       },

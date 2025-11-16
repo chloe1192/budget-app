@@ -130,7 +130,7 @@ export class ApiService {
    * @returns Observable<User> created user
    */
   // Create user
-  addUser(user: User): Observable<User> {
+  createUser(user: User): Observable<User> {
     if (user.avatar) {
       const formData = new FormData();
       formData.append('first_name', user.first_name);
@@ -156,7 +156,7 @@ export class ApiService {
     );
   }
 
-  editUser(user: Partial<User>): Observable<User> {
+  updateUser(user: Partial<User>): Observable<User> {
     return this.http.put<User>(`${this.apiUrl}/user/edit/`, user).pipe(
       catchError((err) => this.handleError(err))
     );
@@ -168,7 +168,7 @@ export class ApiService {
    * @returns Observable<Category> created category
    */
   // Categories
-  addCategory(data: { name: string; color: string; type: string }): Observable<Category> {
+  createCategory(data: { name: string; color: string; type: string }): Observable<Category> {
     return this.http.post<Category>(`${this.apiUrl}/categories/create/`, data).pipe(
       catchError((err) => this.handleError(err))
     );
@@ -180,7 +180,7 @@ export class ApiService {
    * @param data Partial category payload to update
    * @returns Observable<Category> updated category
    */
-  editCategory(
+  updateCategory(
     id: number,
     data: { name: string; color: string; type: string }
   ): Observable<Category> {
@@ -194,7 +194,7 @@ export class ApiService {
    * @param id Category id to delete
    * @returns Observable<void>
    */
-  removeCategory(id: number): Observable<void> {
+  deleteCategory(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/categories/${id}/`).pipe(
       catchError((err) => this.handleError(err))
     );
@@ -212,7 +212,7 @@ export class ApiService {
    * @param data Transaction payload (description, amount, date, category_id)
    * @returns Observable<Transaction> created transaction
    */
-  addTransaction(data: Transaction): Observable<Transaction> {
+  createTransaction(data: Transaction): Observable<Transaction> {
     return this.http.post<Transaction>(
       `${this.apiUrl}/transactions/create`,
       data
@@ -227,7 +227,7 @@ export class ApiService {
    * @param data Updated transaction fields
    * @returns Observable<Transaction> updated transaction
    */
-  editTransaction(
+  updateTransaction(
     id: number,
     data: {
       description: string;
@@ -246,7 +246,7 @@ export class ApiService {
    * @param id Transaction id to delete
    * @returns Observable<void>
    */
-  removeTransaction(id: number): Observable<void> {
+  deleteTransaction(id: number): Observable<void> {
     return this.http.delete<void>(
       `${this.apiUrl}/transactions/${id}/`
     ).pipe(
@@ -313,7 +313,7 @@ export class ApiService {
    * @param data Goal payload containing `title`, `description`, and `date`
    * @returns Observable<Goal> created goal
    */
-  addGoal(data: {
+  createGoal(data: {
     title: string;
     description: string;
     date: string;
@@ -329,7 +329,7 @@ export class ApiService {
    * @param data Updated goal fields
    * @returns Observable<Goal> updated goal
    */
-  editGoal(
+  updateGoal(
     id: number,
     data: { title: string; description: string; date: string }
   ): Observable<Goal> {
@@ -343,7 +343,7 @@ export class ApiService {
    * @param id Goal id to delete
    * @returns Observable<void>
    */
-  removeGoal(id: number): Observable<void> {
+  deleteGoal(id: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/goals/${id}/`).pipe(
       catchError((err) => this.handleError(err))
     );

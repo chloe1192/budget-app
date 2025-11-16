@@ -70,7 +70,7 @@ export class CategoriesPage implements OnInit {
         { text: 'Cancelar', role: 'cancel' },
         {
           text: 'Excluir',
-          handler: () => this.removeCategory(c.id!),
+          handler: () => this.deleteCategory(c.id!),
           cssClass: 'danger'
         }
       ]
@@ -78,8 +78,8 @@ export class CategoriesPage implements OnInit {
     await alert.present();
   }
 
-  removeCategory(id: number) {
-    this.api.removeCategory(id).subscribe({
+  deleteCategory(id: number) {
+    this.api.deleteCategory(id).subscribe({
       next: () => {
         this.categories = this.categories.filter(tr => tr.id !== id);
       },

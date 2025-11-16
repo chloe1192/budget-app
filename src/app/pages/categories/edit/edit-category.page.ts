@@ -57,7 +57,7 @@ export class EditCategoryPage implements OnInit {
     if (!this.categoryForm.valid) return;
 
     this.api
-      .editCategory(this.categoryId, this.categoryForm.value)
+      .updateCategory(this.categoryId, this.categoryForm.value)
       .subscribe({
         next: async () => {
           const toast = await this.toastCtrl.create({

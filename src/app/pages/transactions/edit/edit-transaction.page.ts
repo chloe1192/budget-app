@@ -91,7 +91,7 @@ export class EditTransactionPage implements OnInit {
       amount: this.parseCurrency(formValue.amount)
     };
 
-    this.api.editTransaction(this.transactionId, data).subscribe({
+    this.api.updateTransaction(this.transactionId, data).subscribe({
       next: async () => {
         const toast = await this.toastCtrl.create({
           message: 'Transação atualizada com sucesso!',

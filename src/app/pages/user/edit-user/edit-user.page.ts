@@ -54,7 +54,7 @@ export class EditUserPage implements OnInit {
         delete userData.avatar;
       }
       
-      this.api.editUser(userData).subscribe({
+      this.api.updateUser(userData).subscribe({
         next: async (response) => {
           const toast = await this.toastCtrl.create({
             message: 'Profile updated successfully',

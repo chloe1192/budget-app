@@ -43,7 +43,7 @@ export class CreateCategoryPage implements OnInit {
     }
 
     const category = this.categoryForm.value;
-    this.api.addCategory(category).subscribe({
+    this.api.createCategory(category).subscribe({
       next: async () => {
         const toast = await this.toastCtrl.create({
           message: 'Categoria criada com sucesso!',

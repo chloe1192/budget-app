@@ -61,7 +61,7 @@ export class TransactionsPage implements OnInit {
         {
           text: 'Excluir',
           cssClass: 'danger',
-          handler: () => this.removeTransaction(t.id),
+          handler: () => this.deleteTransaction(t.id),
         }
       ]
     });
@@ -69,8 +69,8 @@ export class TransactionsPage implements OnInit {
     await alert.present();
   }
 
-  removeTransaction(id: number) {
-    this.api.removeTransaction(id).subscribe({
+  deleteTransaction(id: number) {
+    this.api.deleteTransaction(id).subscribe({
       next: () => {
         this.transactions = this.transactions.filter(tr => tr.id !== id);
       },

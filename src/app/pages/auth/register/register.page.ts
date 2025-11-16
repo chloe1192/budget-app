@@ -56,7 +56,7 @@ export class RegisterPage implements OnInit {
   async register() {
     if (this.userForm.invalid) return;
 
-    this.api.addUser(this.user).subscribe({
+    this.api.createUser(this.user).subscribe({
       next: async (res: User) => {
         console.log('Usuário criado:', res);
         const toast = await this.toastCtrl.create({
