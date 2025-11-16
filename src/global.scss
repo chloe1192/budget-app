@@ -262,3 +262,130 @@ ion-item {
     }
   }
 }
+
+// Dark Mode Content
+.dark-content {
+  --background: #1a1a1a;
+
+  ion-list {
+    background: transparent;
+    padding: 16px;
+
+    ion-item {
+      --background: #2a2a2a;
+      --border-radius: 12px;
+      --padding-start: 16px;
+      --padding-end: 16px;
+      margin-bottom: 8px;
+      --min-height: 64px;
+
+      ion-label {
+        h3 {
+          color: white;
+          font-weight: 600;
+          font-size: 15px;
+          margin-bottom: 4px;
+        }
+
+        p {
+          color: rgba(255, 255, 255, 0.6);
+          font-size: 13px;
+        }
+
+        ion-text {
+          color: rgba(255, 255, 255, 0.8);
+        }
+      }
+
+      .amount {
+        font-weight: 700;
+        font-size: 16px;
+
+        &.positive {
+          color: var(--ion-color-success);
+        }
+
+        &.negative {
+          color: var(--ion-color-danger);
+        }
+      }
+
+      ion-chip {
+        font-size: 12px;
+        height: 24px;
+      }
+    }
+  }
+
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 64px 32px;
+    text-align: center;
+
+    .empty-icon {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: rgba(139, 92, 246, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+
+      ion-icon {
+        font-size: 40px;
+        color: var(--ion-color-primary);
+      }
+    }
+
+    h3 {
+      color: white;
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+
+    p {
+      color: rgba(255, 255, 255, 0.6);
+      margin: 0 0 24px;
+      font-size: 14px;
+    }
+  }
+
+  .form-container {
+    ion-card {
+      background: #2a2a2a;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+
+      .input-item {
+        --background: #1a1a1a;
+        --color: white;
+
+        ion-label {
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        ion-input,
+        ion-textarea,
+        ion-select,
+        ion-datetime {
+          color: white;
+          --placeholder-color: rgba(255, 255, 255, 0.4);
+        }
+      }
+
+      .profile-header {
+        h2 {
+          color: white;
+        }
+      }
+
+      ion-text {
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
