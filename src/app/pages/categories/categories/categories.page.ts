@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController, NavController } from '@ionic/angular';
+import { ActivatedRoute } from '@angular/router';
 import { ApiService, Category } from 'src/app/services/api';
 
 @Component({
@@ -13,15 +14,23 @@ export class CategoriesPage implements OnInit {
   constructor(
     private api: ApiService,
     private alertCtrl: AlertController,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.loadCategories();
+    this.route.queryParams.subscribe(params => {
+      this.loadCategories(params);
+    });
   }
 
-  loadCategories() {
-    this.api.fetchList<Category>('categories', { paginated: false }).subscribe(
+  loadCategories(params: any = {}) {
+    const apiParams: any = {};
+    if (params.id) apiParams.id = params.id;
+    if (params.type) apiParams.type = params.type;
+    if (params.q) apiParams.q = params.q;
+    
+    this.api.fetchList<Category>('categories', { paginated: false, params: apiParams }).subscribe(
       (res: Category[]) => {
         this.categories = res;
         console.log(this.categories)
@@ -33,12 +42,9 @@ export class CategoriesPage implements OnInit {
     )
   }
    doRefresh(event: any) {
-    this.api.fetchList<Category>('categories', { paginated: false }).subscribe({
-      next: (res: Category[]) => {
-        this.categories = res;
-        event.target.complete();
-      },
-      error: () => event.target.complete(),
+    this.route.queryParams.subscribe(params => {
+      this.loadCategories(params);
+      event.target.complete();
     });
   }
 

@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" class="ion-no-border">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="'/edit-user'">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <ion-card class="form-container">
+      <ion-card-content>
+        <div class="profile-header ion-text-center ion-margin-bottom">
+          <div class="item-icon" style="background-color: var(--ion-color-primary); width: 80px; height: 80px; margin: 0 auto 16px;">
+            <ion-icon name="person" style="font-size: 40px;"></ion-icon>
+          </div>
+          <h2>{{ user.username }}</h2>
+        </div>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">First Name</ion-label>
+          <ion-text>{{ user.first_name }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Last Name</ion-label>
+          <ion-text>{{ user.last_name }}</ion-text>
+        </ion-item>
+
+        <ion-item lines="none" class="input-item">
+          <ion-label position="stacked">Email</ion-label>
+          <ion-text>{{ user.email }}</ion-text>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

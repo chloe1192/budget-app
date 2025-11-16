@@ -1,0 +1,46 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/transactions"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Transaction</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <div class="form-container">
+    <ion-card>
+      <ion-card-content>
+        <form [formGroup]="transactionForm" (ngSubmit)="createTransaction()">
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Title</ion-label>
+            <ion-input formControlName="title"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea formControlName="description" rows="3"></ion-textarea>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Amount</ion-label>
+            <ion-input type="number" formControlName="amount"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Category</ion-label>
+            <ion-select formControlName="category_id" placeholder="Select category">
+              <ion-select-option *ngFor="let cat of categories" [value]="cat.id">
+                {{ cat.name }} ({{ cat.type }})
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" color="primary" class="ion-margin-top">
+            Create Transaction
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

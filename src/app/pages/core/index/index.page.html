@@ -1,0 +1,69 @@
+<ion-content [fullscreen]="true" class="dark-home">
+  <!-- Header with gradient background -->
+  <div class="dark-header">
+    <ion-buttons class="menu-button">
+      <ion-menu-button color="light"></ion-menu-button>
+    </ion-buttons>
+    <div class="header-content">
+      <p class="greeting">Welcome back</p>
+      <h1 class="user-name">{{ user?.first_name || user?.username || 'User' }}</h1>
+    </div>
+
+    <!-- Balance Card -->
+    <ion-card class="balance-card-dark">
+      <ion-card-content>
+        <div class="balance-label">Available Balance</div>
+        <div class="balance-amount">{{ user?.total_balance | currency: 'BRL' }}</div>
+        <div class="balance-info">
+          <div class="balance-detail">
+            <ion-icon name="arrow-up-circle"></ion-icon>
+            <span>Income</span>
+          </div>
+          <div class="balance-detail">
+            <ion-icon name="arrow-down-circle"></ion-icon>
+            <span>Expenses</span>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Content Area -->
+  <div class="content-area">
+    <!-- Quick Actions -->
+    <div class="quick-actions">
+      <ion-button expand="block" color="primary" [routerLink]="'/transactions/create'" class="action-button">
+        <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+        New Transaction
+      </ion-button>
+    </div>
+
+    <!-- Recent Transactions Section -->
+    <div class="section">
+      <div class="section-header">
+        <h2>Recent Activity</h2>
+        <ion-button fill="clear" size="small" [routerLink]="'/transactions'" color="primary">
+          See all
+          <ion-icon slot="end" name="chevron-forward"></ion-icon>
+        </ion-button>
+      </div>
+
+      <ion-list lines="none" class="transaction-list">
+        <ion-item *ngFor="let t of (transactions || [])" button [routerLink]="['/transactions', 'edit', t.id]" class="transaction-item">
+          <div slot="start" class="item-icon" [style.background-color]="t.category?.color || '#8B5CF6'">
+            <ion-icon name="wallet-outline"></ion-icon>
+          </div>
+          <ion-label>
+            <h3>{{ t.description }}</h3>
+            <p>{{ t.date | date:'dd MMM' }} • {{ t.category?.name }}</p>
+          </ion-label>
+          <div slot="end" class="amount" [class.positive]="t.category?.type === 'INCOME'" [class.negative]="t.category?.type === 'EXPENSE'">
+            <span *ngIf="t.category?.type === 'EXPENSE'">-</span>
+            <span *ngIf="t.category?.type === 'INCOME'">+</span>
+            {{ t.amount | currency:'BRL' }}
+          </div>
+        </ion-item>
+      </ion-list>
+    </div>
+  </div>
+</ion-content>

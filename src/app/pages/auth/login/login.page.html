@@ -1,0 +1,45 @@
+<ion-content color="primary" class="auth-content">
+  <div class="auth-container">
+    <div class="logo-section">
+      <h1 class="app-title">Finance App</h1>
+      <p class="app-subtitle">Manage your money wisely</p>
+    </div>
+
+    <ion-card class="auth-card">
+      <ion-card-content>
+        <h2 class="card-title">Welcome back</h2>
+        
+        <form (ngSubmit)="login()">
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Username</ion-label>
+            <ion-input
+              [(ngModel)]="username"
+              name="username"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Password</ion-label>
+            <ion-input
+              [(ngModel)]="password"
+              name="password"
+              type="password"
+              required
+            ></ion-input>
+          </ion-item>
+
+          <ion-button expand="block" type="submit" color="primary" class="ion-margin-top">
+            Sign In
+          </ion-button>
+        </form>
+
+        <div class="link-section">
+          <ion-button fill="clear" size="small" [routerLink]="'/register'" routerDirection="forward">
+            Don't have an account? Sign up
+          </ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

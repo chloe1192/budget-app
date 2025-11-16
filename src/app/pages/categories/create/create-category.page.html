@@ -1,0 +1,49 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" class="ion-no-border">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/categories"></ion-back-button>
+    </ion-buttons>
+    <ion-title>New Category</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <ion-card class="form-container">
+      <ion-card-content>
+        <form [formGroup]="categoryForm" (ngSubmit)="createCategory()">
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Category Name</ion-label>
+            <ion-input formControlName="name"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label>Color</ion-label>
+            <ion-input type="color" formControlName="color"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label>Type</ion-label>
+            <ion-select formControlName="type">
+              <ion-select-option
+                *ngFor="let type of type_choices"
+                [value]="type.value"
+              >
+                {{ type.label }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            class="ion-margin-top"
+            color="primary"
+          >
+            Create Category
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

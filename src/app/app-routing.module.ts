@@ -7,103 +7,109 @@ const routes: Routes = [
     redirectTo: 'index',
     pathMatch: 'full',
   },
+  // Core pages
   {
     path: 'index',
     loadChildren: () =>
-      import('./pages/index/index.module').then((m) => m.IndexPageModule),
+      import('./pages/core/index/index.module').then((m) => m.IndexPageModule),
   },
   {
     path: 'loader',
     loadChildren: () =>
-      import('./pages/loader/loader.module').then((m) => m.LoaderPageModule),
+      import('./pages/core/loader/loader.module').then((m) => m.LoaderPageModule),
   },
+  // Auth pages
   {
     path: 'login',
     loadChildren: () =>
-      import('./pages/login/login.module').then((m) => m.LoginPageModule),
+      import('./pages/auth/login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'register',
     loadChildren: () =>
-      import('./pages/register/register.module').then(
+      import('./pages/auth/register/register.module').then(
         (m) => m.RegisterPageModule
       ),
   },
   {
-    path: 'index',
+    path: 'logout',
     loadChildren: () =>
-      import('./pages/index/index.module').then((m) => m.IndexPageModule),
+      import('./pages/auth/logout/logout.module').then((m) => m.LogoutPageModule),
   },
+  // User pages
   {
     path: 'user',
     loadChildren: () =>
-      import('./pages/user/user.module').then((m) => m.UserPageModule),
+      import('./pages/user/user/user.module').then((m) => m.UserPageModule),
   },
   {
     path: 'user/edit',
     loadChildren: () =>
-      import('./pages/edit-user/edit-user.module').then(
+      import('./pages/user/edit-user/edit-user.module').then(
         (m) => m.EditUserPageModule
       ),
   },
+  // Category pages
   {
     path: 'categories',
     loadChildren: () =>
-      import('./pages/categories/categories.module').then(
+      import('./pages/categories/categories/categories.module').then(
         (m) => m.CategoriesPageModule
       ),
   },
   {
     path: 'categories/create',
     loadChildren: () =>
-      import('./pages/create-category/create-category.module').then(
+      import('./pages/categories/create/create-category.module').then(
         (m) => m.CreateCategoryPageModule
       ),
   },
   {
     path: 'categories/edit',
     loadChildren: () =>
-      import('./pages/edit-category/edit-category.module').then(
+      import('./pages/categories/edit/edit-category.module').then(
         (m) => m.EditCategoryPageModule
       ),
   },
+  // Transaction pages
   {
     path: 'transactions',
     loadChildren: () =>
-      import('./pages/transactions/transactions.module').then(
+      import('./pages/transactions/transactions/transactions.module').then(
         (m) => m.TransactionsPageModule
       ),
   },
   {
     path: 'transactions/create',
     loadChildren: () =>
-      import('./pages/create-transaction/create-transaction.module').then(
+      import('./pages/transactions/create/create-transaction.module').then(
         (m) => m.CreateTransactionPageModule
       ),
   },
   {
     path: 'transactions/edit',
     loadChildren: () =>
-      import('./pages/edit-transaction/edit-transaction.module').then(
+      import('./pages/transactions/edit/edit-transaction.module').then(
         (m) => m.EditTransactionPageModule
       ),
   },
+  // Goal pages
   {
     path: 'goals',
     loadChildren: () =>
-      import('./pages/goals/goals.module').then((m) => m.GoalsPageModule),
+      import('./pages/goals/goals/goals.module').then((m) => m.GoalsPageModule),
   },
   {
     path: 'goals/create',
     loadChildren: () =>
-      import('./pages/create-goal/create-goal.module').then(
+      import('./pages/goals/create/create-goal.module').then(
         (m) => m.CreateGoalPageModule
       ),
   },
   {
     path: 'goals/edit',
     loadChildren: () =>
-      import('./pages/edit-goal/edit-goal.module').then(
+      import('./pages/goals/edit/edit-goal.module').then(
         (m) => m.EditGoalPageModule
       ),
   },

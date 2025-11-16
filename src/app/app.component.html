@@ -2,34 +2,61 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content" type="overlay">
       <ion-content>
-        <ion-list id="inbox-list">
-          <ion-list-header>Budget</ion-list-header>
-          <ion-note [routerLink]="'/user'" *ngIf="username != ''">hi &#64;{{ username }}</ion-note>
-          <ion-menu-toggle auto-hide="false" *ngIf="token == ''">
-              <ion-item routerDirection="root" [routerLink]="'/login'" lines="none" detail="false" routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start"></ion-icon>
-                <ion-label>Login</ion-label>
-              </ion-item>
+        <div class="menu-header">
+          <div class="menu-profile" [routerLink]="'/user'">
+            <div class="profile-avatar">
+              <ion-icon name="person"></ion-icon>
+            </div>
+            <div class="profile-info">
+              <h3 *ngIf="username && user?.first_name">{{ user.first_name }} {{ user.last_name }}</h3>
+              <h3 *ngIf="username && !user?.first_name">{{ username }}</h3>
+              <p>View Profile</p>
+            </div>
+          </div>
+        </div>
+
+        <ion-list id="main-list">
+          <ion-menu-toggle auto-hide="false" *ngIf="!token">
+            <ion-item
+              routerDirection="root"
+              [routerLink]="'/login'"
+              lines="none"
+              detail="false"
+              routerLinkActive="selected"
+            >
+              <ion-icon aria-hidden="true" slot="start" name="log-in-outline"></ion-icon>
+              <ion-label>Login</ion-label>
+            </ion-item>
           </ion-menu-toggle>
-          @for (p of appPages; track p; let i = $index) {
+          <ng-container *ngFor="let p of (appPages || []); trackBy: trackPage">
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" [routerLink]="[p.url]" lines="none" detail="false" routerLinkActive="selected">
-                <ion-icon aria-hidden="true" slot="start" [ios]="p.icon + '-outline'" [md]="p.icon + '-sharp'"></ion-icon>
+              <ion-item
+                routerDirection="root"
+                [routerLink]="p.url"
+                lines="none"
+                detail="false"
+                routerLinkActive="selected"
+              >
+                <ion-icon
+                  aria-hidden="true"
+                  slot="start"
+                  [name]="p.icon + '-outline'"
+                ></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          }
+          </ng-container>
         </ion-list>
 
-        <ion-list id="labels-list">
-          <ion-list-header>Labels</ion-list-header>
+        <ion-list id="categories-list">
+          <ion-list-header>Categories</ion-list-header>
 
-          @for (label of labels; track label) {
-            <ion-item lines="none">
-              <ion-icon aria-hidden="true" slot="start" ios="bookmark-outline" md="bookmark-sharp"></ion-icon>
-              <ion-label>{{ label }}</ion-label>
+          <ng-container *ngFor="let cat of (categories || [])">
+            <ion-item [routerLink]="'/categories'" [queryParams]="{id: cat.id}" lines="none">
+              <div slot="start" class="category-indicator" [style.background-color]="cat.color"></div>
+              <ion-label>{{ cat?.name }}</ion-label>
             </ion-item>
-          }
+          </ng-container>
         </ion-list>
       </ion-content>
     </ion-menu>

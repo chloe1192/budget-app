@@ -1,0 +1,61 @@
+<ion-header mode="ios" class="ion-no-border">
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/index"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Categories</ion-title>
+    <ion-buttons slot="end">
+      <ion-button routerLink="/categories/create">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <!-- Empty State -->
+  <div *ngIf="!categories || categories.length === 0" class="empty-state">
+    <div class="empty-icon">
+      <ion-icon name="pricetags-outline"></ion-icon>
+    </div>
+    <h3>No categories yet</h3>
+    <p>Organize your transactions with categories</p>
+    <ion-button color="primary" routerLink="/categories/create">
+      <ion-icon slot="start" name="add"></ion-icon>
+      Add Category
+    </ion-button>
+  </div>
+
+  <!-- Categories List -->
+  <ion-list *ngIf="categories && categories.length > 0" lines="none">
+    <ion-item-sliding *ngFor="let c of (categories || [])">
+      <ion-item button>
+        <div slot="start" class="item-icon" [style.background-color]="c.color || '#8B5CF6'">
+          <ion-icon name="{{ c.type === 'INCOME' ? 'arrow-down-outline' : 'arrow-up-outline' }}"></ion-icon>
+        </div>
+        
+        <ion-label>
+          <h3>{{ c.name }}</h3>
+          <p>{{ c.type === 'INCOME' ? 'Income' : 'Expense' }}</p>
+        </ion-label>
+
+        <ion-chip slot="end" [color]="c.type === 'INCOME' ? 'success' : 'danger'" outline>
+          {{ c.type === 'INCOME' ? 'Income' : 'Expense' }}
+        </ion-chip>
+      </ion-item>
+
+      <ion-item-options side="end">
+        <ion-item-option color="primary" (click)="editCategory(c)">
+          <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+        </ion-item-option>
+        <ion-item-option color="danger" (click)="confirmDelete(c)">
+          <ion-icon slot="icon-only" name="trash-outline"></ion-icon>
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary" class="ion-no-border">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/goals"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Edit Goal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-padding">
+    <ion-card class="form-container">
+      <ion-card-content>
+        <form [formGroup]="goalForm" (ngSubmit)="updateGoal()">
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Title</ion-label>
+            <ion-input formControlName="title"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Description</ion-label>
+            <ion-textarea formControlName="description"></ion-textarea>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Amount</ion-label>
+            <ion-input type="number" formControlName="amount"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Date</ion-label>
+            <ion-datetime
+              formControlName="date"
+              display-format="DD/MM/YYYY"
+            ></ion-datetime>
+          </ion-item>
+
+          <ion-button
+            expand="block"
+            type="submit"
+            class="ion-margin-top"
+            color="primary"
+          >
+            Update Goal
+          </ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>
