@@ -50,16 +50,16 @@
 
       <ion-list lines="none" class="transaction-list">
         <ion-item *ngFor="let t of (transactions || [])" button [routerLink]="['/transactions', 'edit', t.id]" class="transaction-item">
-          <div slot="start" class="item-icon" [style.background-color]="t.category?.color || '#8B5CF6'">
+          <div slot="start" class="item-icon" [style.background-color]="t.category.color || '#8B5CF6'">
             <ion-icon name="wallet-outline"></ion-icon>
           </div>
           <ion-label>
             <h3>{{ t.description }}</h3>
-            <p>{{ t.date | date:'dd MMM' }} • {{ t.category?.name }}</p>
+            <p>{{ t.date | date:'dd MMM' }} • {{ t.category.name }}</p>
           </ion-label>
-          <div slot="end" class="amount" [class.positive]="t.category?.type === 'INCOME'" [class.negative]="t.category?.type === 'EXPENSE'">
-            <span *ngIf="t.category?.type === 'EXPENSE'">-</span>
-            <span *ngIf="t.category?.type === 'INCOME'">+</span>
+          <div slot="end" class="amount" [class.positive]="t.category.type === 'INCOME'" [class.negative]="t.category.type === 'EXPENSE'">
+            <span *ngIf="t.category.type === 'EXPENSE'">-</span>
+            <span *ngIf="t.category.type === 'INCOME'">+</span>
             {{ t.amount | currency:'BRL' }}
           </div>
         </ion-item>
