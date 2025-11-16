@@ -26,10 +26,31 @@ export class CreateTransactionPage implements OnInit {
     this.transactionForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(5)]],
-      amount: [0, [Validators.required, Validators.min(0.01)]],
+      amount: ['', [Validators.required]],
       date: [new Date().toISOString(), Validators.required],
       category_id: [null, Validators.required],
     });
+
+    this.transactionForm.get('amount')?.valueChanges.subscribe(value => {
+      if (value) {
+        const formatted = this.formatCurrency(value);
+        if (formatted !== value) {
+          this.transactionForm.get('amount')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+  }
+
+  formatCurrency(value: string): string {
+    let numbers = value.replace(/\D/g, '');
+    if (!numbers) return '';
+    
+    const amount = parseInt(numbers) / 100;
+    return amount.toFixed(2).replace('.', ',');
+  }
+
+  parseCurrency(value: string): number {
+    return parseFloat(value.replace(',', '.')) || 0;
   }
 
   loadTransactions() {
@@ -63,7 +84,11 @@ export class CreateTransactionPage implements OnInit {
       return;
     }
 
-    const transaction: Transaction = this.transactionForm.value;
+    const formValue = this.transactionForm.value;
+    const transaction: Transaction = {
+      ...formValue,
+      amount: this.parseCurrency(formValue.amount)
+    };
     this.api.addTransaction(transaction).subscribe({
       next: async () => {
         const toast = await this.toastCtrl.create({

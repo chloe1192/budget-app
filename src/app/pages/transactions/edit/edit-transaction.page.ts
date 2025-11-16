@@ -28,13 +28,34 @@ export class EditTransactionPage implements OnInit {
 
     this.transactionForm = this.fb.group({
       description: ['', [Validators.required, Validators.minLength(3)]],
-      amount: [0, [Validators.required, Validators.min(0.01)]],
+      amount: ['', [Validators.required]],
       date: [new Date().toISOString(), Validators.required],
       category_id: [null, Validators.required],
     });
 
+    this.transactionForm.get('amount')?.valueChanges.subscribe(value => {
+      if (value && typeof value === 'string') {
+        const formatted = this.formatCurrency(value);
+        if (formatted !== value) {
+          this.transactionForm.get('amount')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+
     this.loadCategories();
     this.loadTransaction();
+  }
+
+  formatCurrency(value: string): string {
+    let numbers = value.replace(/\D/g, '');
+    if (!numbers) return '';
+    
+    const amount = parseInt(numbers) / 100;
+    return amount.toFixed(2).replace('.', ',');
+  }
+
+  parseCurrency(value: string): number {
+    return parseFloat(value.replace(',', '.')) || 0;
   }
 
   loadCategories() {
@@ -51,7 +72,7 @@ export class EditTransactionPage implements OnInit {
         if (transaction) {
           this.transactionForm.patchValue({
             description: transaction.description,
-            amount: transaction.amount,
+            amount: transaction.amount.toFixed(2).replace('.', ','),
             date: transaction.date,
             category_id: transaction.category.id,
           });
@@ -64,7 +85,13 @@ export class EditTransactionPage implements OnInit {
   async updateTransaction() {
     if (!this.transactionForm.valid) return;
 
-    this.api.editTransaction(this.transactionId, this.transactionForm.value).subscribe({
+    const formValue = this.transactionForm.value;
+    const data = {
+      ...formValue,
+      amount: this.parseCurrency(formValue.amount)
+    };
+
+    this.api.editTransaction(this.transactionId, data).subscribe({
       next: async () => {
         const toast = await this.toastCtrl.create({
           message: 'Transação atualizada com sucesso!',

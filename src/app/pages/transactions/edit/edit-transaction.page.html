@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+<ion-content [fullscreen]="true" class="dark-content">
   <div class="ion-padding">
     <ion-card class="form-container">
       <ion-card-content>
@@ -18,8 +18,12 @@
           </ion-item>
 
           <ion-item lines="none" class="input-item">
-            <ion-label position="floating">Amount</ion-label>
-            <ion-input type="number" formControlName="amount"></ion-input>
+            <ion-label position="floating">Amount (R$)</ion-label>
+            <ion-input 
+              type="text" 
+              inputmode="decimal"
+              formControlName="amount"
+              placeholder="0,00"></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="input-item">

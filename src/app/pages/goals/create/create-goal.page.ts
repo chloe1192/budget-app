@@ -23,15 +23,40 @@ export class CreateGoalPage implements OnInit {
     this.goalForm = this.fb.group({
       title: ['', [Validators.required, Validators.minLength(2)]],
       description: ['', [Validators.required, Validators.minLength(5)]],
-      amount: [0, [Validators.required, Validators.min(0.01)]],
+      amount: ['', [Validators.required]],
       date: [new Date().toISOString(), Validators.required],
     });
+
+    this.goalForm.get('amount')?.valueChanges.subscribe(value => {
+      if (value) {
+        const formatted = this.formatCurrency(value);
+        if (formatted !== value) {
+          this.goalForm.get('amount')?.setValue(formatted, { emitEvent: false });
+        }
+      }
+    });
+  }
+
+  formatCurrency(value: string): string {
+    let numbers = value.replace(/\D/g, '');
+    if (!numbers) return '';
+    
+    const amount = parseInt(numbers) / 100;
+    return amount.toFixed(2).replace('.', ',');
+  }
+
+  parseCurrency(value: string): number {
+    return parseFloat(value.replace(',', '.')) || 0;
   }
 
   async createGoal() {
     if (this.goalForm.invalid) return;
 
-    const data = this.goalForm.value;
+    const formValue = this.goalForm.value;
+    const data = {
+      ...formValue,
+      amount: this.parseCurrency(formValue.amount)
+    };
     this.api.addGoal(data).subscribe({
       next: async (res: Goal) => {
         const toast = await this.toastCtrl.create({
