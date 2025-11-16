@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api';
 import { TokenStorageService } from 'src/app/services/token-storage.service';
 
@@ -17,7 +18,8 @@ export class LoginPage {
   constructor(
     private api: ApiService,
     private router: Router,
-    private tokenStorage: TokenStorageService
+    private tokenStorage: TokenStorageService,
+    private toastCtrl: ToastController
   ) { }
 
   async login() {
@@ -30,12 +32,22 @@ export class LoginPage {
           this.router.navigate(['/index'])
         } catch (error) {
           console.error('Error storing token:', error);
-          alert('Login successful but failed to store credentials');
+          const toast = await this.toastCtrl.create({
+            message: 'Login successful but failed to store credentials',
+            duration: 3000,
+            color: 'warning'
+          });
+          await toast.present();
         }
       },
-      err => {
+      async err => {
         console.log('Error at logging in');
-        alert('User or password invalid');
+        const toast = await this.toastCtrl.create({
+          message: 'User or password invalid',
+          duration: 3000,
+          color: 'danger'
+        });
+        await toast.present();
       }
     )
   }

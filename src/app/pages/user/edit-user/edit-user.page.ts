@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ToastController } from '@ionic/angular';
 import { ApiService, User } from 'src/app/services/api';
 
 @Component({
@@ -13,7 +15,9 @@ export class EditUserPage implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private api: ApiService
+    private api: ApiService,
+    private router: Router,
+    private toastCtrl: ToastController
   ) {
     this.userForm = this.fb.group({
       first_name: ['', Validators.required],
@@ -34,6 +38,62 @@ export class EditUserPage implements OnInit {
         email: user.email
       });
     });
+  }
+
+  updateUser() {
+    if (this.userForm.valid) {
+      const userData = { ...this.userForm.value };
+      
+      // Remove password if empty (don't update password)
+      if (!userData.password || userData.password.trim() === '') {
+        delete userData.password;
+      }
+      
+      // Remove avatar if null (don't update avatar for now)
+      if (!userData.avatar) {
+        delete userData.avatar;
+      }
+      
+      this.api.editUser(userData).subscribe({
+        next: async (response) => {
+          const toast = await this.toastCtrl.create({
+            message: 'Profile updated successfully',
+            duration: 2000,
+            color: 'success'
+          });
+          await toast.present();
+          this.router.navigate(['/user']);
+        },
+        error: async (err) => {
+          let errorMsg = 'Error updating profile';
+          
+          // Handle different error formats
+          if (err.error?.password) {
+            errorMsg = Array.isArray(err.error.password) 
+              ? err.error.password.join(', ') 
+              : err.error.password;
+          } else if (err.error?.error) {
+            errorMsg = err.error.error;
+          } else if (err.error?.message) {
+            errorMsg = err.error.message;
+          } else if (typeof err.error === 'string') {
+            errorMsg = err.error;
+          } else if (err.error) {
+            const firstError = Object.values(err.error).find(v => v);
+            if (firstError) {
+              errorMsg = Array.isArray(firstError) ? firstError[0] : String(firstError);
+            }
+          }
+          
+          const toast = await this.toastCtrl.create({
+            message: errorMsg,
+            duration: 3000,
+            color: 'danger'
+          });
+          await toast.present();
+        }
+      });
+    }
   }
 
 }

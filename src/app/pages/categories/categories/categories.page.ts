@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 import { ApiService, Category } from 'src/app/services/api';
 
@@ -15,7 +15,8 @@ export class CategoriesPage implements OnInit {
     private api: ApiService,
     private alertCtrl: AlertController,
     private navCtrl: NavController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private toastCtrl: ToastController
   ) { }
 
   ngOnInit() {
@@ -35,9 +36,14 @@ export class CategoriesPage implements OnInit {
         this.categories = res;
         console.log(this.categories)
       },
-      (err: any) => {
+      async (err: any) => {
         console.log(err.error);
-        alert(err.error)
+        const toast = await this.toastCtrl.create({
+          message: err.error?.message || 'Error loading categories',
+          duration: 3000,
+          color: 'danger'
+        });
+        await toast.present();
       }
     )
   }

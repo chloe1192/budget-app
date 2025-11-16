@@ -39,12 +39,17 @@ export class RegisterPage implements OnInit {
     });
   }
 
-  onFileSelected(event: any) {
+  async onFileSelected(event: any) {
     const file: File = event.target.files[0];
     if (file && file.type.startsWith('image/')) {
       this.user.avatar = file;
     } else {
-      alert('Arquivo inválido! Selecione uma imagem.');
+      const toast = await this.toastCtrl.create({
+        message: 'Arquivo inválido! Selecione uma imagem.',
+        duration: 3000,
+        color: 'warning'
+      });
+      await toast.present();
     }
   }
 
