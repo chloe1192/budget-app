@@ -53,7 +53,7 @@ export class EditTransactionPage implements OnInit {
             description: transaction.description,
             amount: transaction.amount,
             date: transaction.date,
-            category_id: transaction.category_id,
+            category_id: transaction.category.id,
           });
         }
       },
