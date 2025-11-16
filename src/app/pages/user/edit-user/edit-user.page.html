@@ -11,7 +11,7 @@
   <div class="ion-padding">
     <ion-card class="form-container">
       <ion-card-content>
-        <form [formGroup]="userForm">
+        <form [formGroup]="userForm" (ngSubmit)="updateUser()">
           <ion-item lines="none" class="input-item">
             <ion-label position="floating">First Name</ion-label>
             <ion-input formControlName="first_name"></ion-input>

@@ -5,7 +5,7 @@
     </ion-buttons>
     <ion-title>Profile</ion-title>
     <ion-buttons slot="end">
-      <ion-button [routerLink]="'/edit-user'">
+      <ion-button [routerLink]="'/user/edit'">
         <ion-icon slot="icon-only" name="create-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -14,7 +14,14 @@
 
 <ion-content [fullscreen]="true" class="dark-content">
   <div class="ion-padding">
-    <ion-card class="form-container">
+    <!-- Loading state -->
+    <div *ngIf="!user" class="ion-text-center ion-padding">
+      <ion-spinner></ion-spinner>
+      <p>Loading profile...</p>
+    </div>
+
+    <!-- User data -->
+    <ion-card *ngIf="user" class="form-container">
       <ion-card-content>
         <div class="profile-header ion-text-center ion-margin-bottom">
           <div class="item-icon" style="background-color: var(--ion-color-primary); width: 80px; height: 80px; margin: 0 auto 16px;">

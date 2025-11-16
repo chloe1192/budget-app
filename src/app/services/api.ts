@@ -5,6 +5,7 @@ import { catchError, retry, tap, map } from 'rxjs/operators';
 import { environment } from 'src/environments/environment';
 
 export interface User {
+  id?: number;
   first_name: string;
   last_name: string;
   username: string;
@@ -68,7 +69,7 @@ export class ApiService {
 
   /**
    * Global error handler for API calls.
-   * Logs errors and returns a user-friendly error observable.
+   * Logs errors and returns the original HttpErrorResponse for detailed handling.
    */
   private handleError(error: HttpErrorResponse) {
     let errorMsg = 'An unknown error occurred';
@@ -85,7 +86,8 @@ export class ApiService {
     }
 
     console.error(errorMsg);
-    return throwError(() => new Error(errorMsg));
+    // Return the original error object so components can access error.error for detailed validation messages
+    return throwError(() => error);
   }
 
   /**
@@ -150,6 +152,12 @@ export class ApiService {
       email: user.email,
       password: user.password,
     }).pipe(
+      catchError((err) => this.handleError(err))
+    );
+  }
+
+  editUser(user: Partial<User>): Observable<User> {
+    return this.http.put<User>(`${this.apiUrl}/user/edit/`, user).pipe(
       catchError((err) => this.handleError(err))
     );
   }
