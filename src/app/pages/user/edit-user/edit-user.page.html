@@ -1,9 +1,11 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="primary" class="ion-no-border">
+
     <ion-buttons slot="start">
       <ion-back-button defaultHref="/user"></ion-back-button>
     </ion-buttons>
     <ion-title>Edit Profile</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
@@ -40,7 +42,12 @@
           <ion-button expand="block" type="submit" color="primary" class="ion-margin-top" [disabled]="userForm.invalid">
             Save Changes
           </ion-button>
+          
+          <ion-button expand="block" color="primary" class="ion-margin-top" (click)="confirmDelete()">
+            Delete account
+          </ion-button>
         </form>
+
       </ion-card-content>
     </ion-card>
   </div>

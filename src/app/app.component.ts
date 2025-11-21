@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TokenStorageService } from './services/token-storage.service';
 import { ApiService, Category, User } from './services/api';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { ApiService, Category, User } from './services/api';
 export class AppComponent implements OnInit {
   username: string = '';
   token: string = '';
-  user: any;
+  user: User | null = null;
   categories: Category[] = [];
 
   public appPages = [
@@ -24,13 +25,15 @@ export class AppComponent implements OnInit {
   ];
   constructor(
     private tokenStorage: TokenStorageService,
-    private api: ApiService
+    private api: ApiService,
+    private toastCtrl: ToastController
   ) {}
 
   async ngOnInit() {
     this.token = (await this.tokenStorage.getToken()) || '';
     this.username = this.tokenStorage.getUsernameSync() || '';
     this.loadCategories();
+    this.loadUser();
   }
 
   trackPage(index: number, item: { title: string; url: string; icon: string }) {
@@ -60,5 +63,22 @@ export class AppComponent implements OnInit {
           console.error('Error loading categories:', err);
         },
       });
+  }
+
+  loadUser(){
+    if (this.token != "") {
+      this.api.fetchUser().subscribe({
+        next: (res) => {
+          this.user = res as User;
+        },
+        error: (err) => {
+          const toast = this.toastCtrl.create({
+            message: "Failed to load user data",
+            duration: 2000,
+            color: "danger"
+          })
+        }
+      })
+    }
   }
 }

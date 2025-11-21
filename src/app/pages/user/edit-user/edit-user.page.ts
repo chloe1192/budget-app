@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { ToastController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
 import { ApiService, User } from 'src/app/services/api';
+import { TokenStorageService } from 'src/app/services/token-storage.service';
 
 @Component({
   standalone: false,
@@ -17,7 +18,9 @@ export class EditUserPage implements OnInit {
     private fb: FormBuilder,
     private api: ApiService,
     private router: Router,
-    private toastCtrl: ToastController
+    private toastCtrl: ToastController,
+    private alertCtrl: AlertController,
+    private tokenSvc: TokenStorageService
   ) {
     this.userForm = this.fb.group({
       first_name: ['', Validators.required],
@@ -96,4 +99,39 @@ export class EditUserPage implements OnInit {
     }
   }
 
+  deleteAccount() {
+    this.api.deleteUser().subscribe({
+      next: async (res) => {
+        const toast = await this.toastCtrl.create({
+          message: "User deleted",
+          duration: 2000,
+          color: "success"
+        })
+        await toast.present();
+        this.tokenSvc.logout();
+        this.router.navigate(['/']);
+      }, error: async (err) => {
+        const toast = await this.toastCtrl.create({
+          message: "Error",
+          duration: 2000,
+          color: "danger"
+        })
+        await toast.present()
+      }
+    })
+  }
+
+  async confirmDelete() {
+    const alert = await this.alertCtrl.create({
+      header: "Confirm",
+      message: "You want to delete your account",
+      buttons: [
+        { text: "Cancel", role: "cancel"},
+        { text: "Delete",
+          handler: () => this.deleteAccount()
+        }
+      ]
+    })
+    await alert.present()
+  }
 }

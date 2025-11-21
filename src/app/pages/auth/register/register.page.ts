@@ -54,6 +54,7 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
+    // TODO handle error to user
     if (this.userForm.invalid) return;
 
     this.api.createUser(this.user).subscribe({

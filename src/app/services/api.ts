@@ -162,6 +162,12 @@ export class ApiService {
     );
   }
 
+  deleteUser(): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/user/delete/`).pipe(
+      catchError((err) => this.handleError(err))
+    )
+  }
+
   /**
    * Create a category for the authenticated user.
    * @param data Object with `name`, `color`, and `type` ('INCOME'|'EXPENSE')

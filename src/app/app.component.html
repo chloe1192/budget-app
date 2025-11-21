@@ -8,7 +8,7 @@
               <ion-icon name="person"></ion-icon>
             </div>
             <div class="profile-info">
-              <h3 *ngIf="username && user?.first_name">{{ user.first_name }} {{ user.last_name }}</h3>
+              <h3 *ngIf="username && user?.first_name">{{ user?.first_name }} {{ user?.last_name }}</h3>
               <h3 *ngIf="username && !user?.first_name">{{ username }}</h3>
               <p>View Profile</p>
             </div>
