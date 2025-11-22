@@ -13,7 +13,6 @@ export class LogoutPage implements OnInit {
 
   async ngOnInit() {
     await this.tokenStorage.logout();
-    // Navigate to login (or index) after clearing token
-    this.router.navigateByUrl('/login', { replaceUrl: true });
+    this.router.navigate(['/index']).then(() => { window.location.reload()})
   }
 }

@@ -19,6 +19,7 @@ export class RegisterPage implements OnInit {
     email: '',
     password: '',
     avatar: null,
+    initial_balance: 0
   };
 
   constructor(
@@ -36,6 +37,7 @@ export class RegisterPage implements OnInit {
       email: ['', [Validators.required, Validators.minLength(3)]],
       password: ['', [Validators.required, Validators.minLength(3)]],
       avatar: null,
+      initial_balance: null
     });
   }
 
@@ -54,10 +56,12 @@ export class RegisterPage implements OnInit {
   }
 
   async register() {
-    // TODO handle error to user
-    if (this.userForm.invalid) return;
+    if (this.userForm.invalid) {
+      console.log("form is invalid", this.userForm)
+      return
+    }
 
-    this.api.createUser(this.user).subscribe({
+    this.api.createUser(this.userForm.value).subscribe({
       next: async (res: User) => {
         console.log('Usuário criado:', res);
         const toast = await this.toastCtrl.create({
@@ -68,9 +72,18 @@ export class RegisterPage implements OnInit {
         this.router.navigate(['/index']);
       },
       error: async (error) => {
-        console.error('Detalhes', error.error);
+        console.log(error.error)
+        let errorMessage = 'Registraion failed';
+        if (error.error) {
+          if (error.error.password && Array.isArray(error.error.password)) {
+            errorMessage = error.error.password.join('\n');
+          }
+          if (error.error.username[0]) {
+            errorMessage = `${errorMessage} ${error.error.username[0]}`
+          }
+        }
         const toast = await this.toastCtrl.create({
-          message: 'Erro ao criar usuario',
+          message: errorMessage,
           duration: 2000,
           color: 'danger',
         });

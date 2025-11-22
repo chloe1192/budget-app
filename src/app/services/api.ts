@@ -13,6 +13,7 @@ export interface User {
   password: string;
   avatar?: File | null;
   total_balance?: number;
+  initial_balance: number
 }
 
 export interface Category {
@@ -131,6 +132,7 @@ export class ApiService {
    */
   // Create user
   createUser(user: User): Observable<User> {
+    console.log("creating user", user)
     if (user.avatar) {
       const formData = new FormData();
       formData.append('first_name', user.first_name);

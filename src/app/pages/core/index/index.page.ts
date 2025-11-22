@@ -19,13 +19,13 @@ export class IndexPage implements OnInit {
 
   ngOnInit() {
     this.loadUser();
-    this.loadTransactions();
   }
 
-  loadUser() {
+  async loadUser() {
     this.api.fetchUser().subscribe({
       next: (res) => {
         this.user = res;
+        this.loadTransactions()
       },
       error: (err) => {
         console.error('Error loading user:', err);

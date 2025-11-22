@@ -8,30 +8,35 @@
 
     <ion-card class="auth-card">
       <ion-card-content>
-        <form (ngSubmit)="register()">
+        <form (ngSubmit)="register()" [formGroup]="userForm">
           <ion-item lines="none" class="input-item">
             <ion-label position="floating">First Name</ion-label>
-            <ion-input [(ngModel)]="user.first_name" name="name"></ion-input>
+            <ion-input formControlName="first_name" name="name"></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="input-item">
             <ion-label position="floating">Last Name</ion-label>
-            <ion-input [(ngModel)]="user.last_name" name="surname"></ion-input>
+            <ion-input formControlName="last_name" name="surname"></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="input-item">
             <ion-label position="floating">Username</ion-label>
-            <ion-input [(ngModel)]="user.username" name="username"></ion-input>
+            <ion-input formControlName="username" name="username"></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="input-item">
             <ion-label position="floating">Email</ion-label>
-            <ion-input [(ngModel)]="user.email" name="email" type="email"></ion-input>
+            <ion-input formControlName="email" name="email" type="email"></ion-input>
           </ion-item>
 
           <ion-item lines="none" class="input-item">
             <ion-label position="floating">Password</ion-label>
-            <ion-input [(ngModel)]="user.password" name="password" type="password"></ion-input>
+            <ion-input formControlName="password" name="password" type="password"></ion-input>
+          </ion-item>
+
+          <ion-item lines="none" class="input-item">
+            <ion-label position="floating">Initial Balance</ion-label>
+            <ion-input formControlName="initial_balance" name="initial_balance" type="name"></ion-input>
           </ion-item>
 
           <ion-button expand="block" type="submit" color="primary" class="ion-margin-top">

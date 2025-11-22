@@ -36,11 +36,6 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
-/**
- * Nubank-Inspired Global Styles
- * -----------------------------------------------------
- */
-
 // Balance Section
 .balance-section {
   padding: 16px;
@@ -228,7 +223,7 @@ ion-item {
     }
     
     .input-item {
-      --background: #f3f4f6;
+      --background: var(--ion-color-dark);
       --border-radius: 12px;
       margin-bottom: 16px;
       --padding-start: 16px;
